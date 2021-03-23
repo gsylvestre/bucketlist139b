@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}All wishes{% endblock %}
+
+{% block body %}
+    <h2>All wishes</h2>
+
+    <a href="{{ path('wish_detail', {id: 666}) }}">wish #666</a>
+
+{% endblock %}
