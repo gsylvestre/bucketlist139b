@@ -24,6 +24,7 @@ class AppFixtures extends Fixture
             $wish->setAuthor($faker->userName);
             $wish->setIsPublished($faker->boolean(90));
             $wish->setDateCreated($faker->dateTimeBetween('- 2 years'));
+            $wish->setLikes($faker->numberBetween(0, 5000));
 
             //demande à doctrine de sauvegarder ce wish
             $manager->persist($wish);

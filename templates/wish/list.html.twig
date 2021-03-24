@@ -5,6 +5,13 @@
 {% block body %}
     <section>
         <h2>All wishes</h2>
+
+        {% if currentPage > 1 %}
+        <a href="{{ path('wish_list', {'page': currentPage-1}) }}">Previous page</a>
+        {% endif %}
+
+        <a href="{{ path('wish_list', {'page': currentPage+1}) }}">Next page</a>
+
         <div class="wish-list">
         {% for wish in wishes %}
 
