@@ -15,10 +15,12 @@ class WishController extends AbstractController
     public function list(WishRepository $wishRepository, int $page = 1): Response
     {
         //todo: requête à la bdd pour aller chercher tous les wishes
-        $wishes = $wishRepository->findWishList($page);
+        $result = $wishRepository->findWishList($page);
+        $wishes = $result['result'];
 
         return $this->render('wish/list.html.twig', [
             "wishes" => $wishes,
+            "totalResultCount" => $result['totalResultCount'],
             "currentPage" => $page,
         ]);
     }

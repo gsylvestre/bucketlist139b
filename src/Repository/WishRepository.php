@@ -24,6 +24,23 @@ class WishRepository extends ServiceEntityRepository
         //en QueryBuilder
         $queryBuilder = $this->createQueryBuilder('w');
 
+        //ajoute des clauses where
+        $queryBuilder
+            ->andWhere('w.isPublished = true');
+
+        //on peut ajouter des morceaux de requête en fonction de variable php par exemple \o/
+        $filterLikes = true;
+        if ($filterLikes){
+            $queryBuilder->andWhere('w.likes > :likesCount');
+            $queryBuilder->setParameter(':likesCount', 300);
+        }
+
+        //modifie le qb pour sélectionner le count plutôt !
+        $queryBuilder->select("COUNT(w)");
+
+        $countQuery = $queryBuilder->getQuery();
+        $totalResultCount = $countQuery->getSingleScalarResult();
+
         //notre offset
         //combien de résultats est-ce qu'on évite de récupérer
         //page1 : offset = 0
@@ -38,16 +55,8 @@ class WishRepository extends ServiceEntityRepository
         //le tri
         $queryBuilder->addOrderBy('w.dateCreated', 'DESC');
 
-        //ajoute des clauses where
-        $queryBuilder
-            ->andWhere('w.isPublished = true');
-
-        //on peut ajouter des morceaux de requête en fonction de variable php par exemple \o/
-        $filterLikes = true;
-        if ($filterLikes){
-            $queryBuilder->andWhere('w.likes > :likesCount');
-            $queryBuilder->setParameter(':likesCount', 300);
-        }
+        //maintenant on veut sélectionner les entités
+        $queryBuilder->select("w");
 
         //on récupère l'objet Query de doctrine
         $query = $queryBuilder->getQuery();
@@ -55,7 +64,10 @@ class WishRepository extends ServiceEntityRepository
         //on exécute la requête et on récupère les résultats
         $result = $query->getResult();
 
-        return $result;
+        return [
+            "result" => $result,
+            "totalResultCount" => $totalResultCount,
+        ];
 
         /*
          //en DQL

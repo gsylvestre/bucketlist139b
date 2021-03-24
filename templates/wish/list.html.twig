@@ -4,13 +4,15 @@
 
 {% block body %}
     <section>
-        <h2>All wishes</h2>
+        <h2>All wishes (page #{{ currentPage }})</h2>
 
         {% if currentPage > 1 %}
         <a href="{{ path('wish_list', {'page': currentPage-1}) }}">Previous page</a>
         {% endif %}
 
+        {% if (currentPage * 20) < totalResultCount %}
         <a href="{{ path('wish_list', {'page': currentPage+1}) }}">Next page</a>
+        {% endif %}
 
         <div class="wish-list">
         {% for wish in wishes %}
