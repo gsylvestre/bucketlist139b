@@ -3,8 +3,17 @@
 {% block title %}All wishes{% endblock %}
 
 {% block body %}
-    <h2>All wishes</h2>
+    <section>
+        <h2>All wishes</h2>
 
-    <a href="{{ path('wish_detail', {id: 666}) }}">wish #666</a>
+        {% for wish in wishes %}
 
+            <article>
+                <a href="{{ path('wish_detail', {id: wish.id}) }}">{{ wish.title }}</a>
+            </article>
+
+        {% else %}
+            <div>Nothing to see here!</div>
+        {% endfor %}
+    </section>
 {% endblock %}

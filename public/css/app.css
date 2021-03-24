@@ -39,6 +39,7 @@ header .container {
 header a {
     color: #FFF;
     text-decoration: none;
+    padding: 4px 10px;
 }
 
 .site-title {
