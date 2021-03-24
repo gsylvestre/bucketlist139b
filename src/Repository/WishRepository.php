@@ -36,10 +36,21 @@ class WishRepository extends ServiceEntityRepository
         }
 
         //modifie le qb pour sélectionner le count plutôt !
+        //ici on souhaite sélectionner d'abord le nombre de résultats que la requête nous aurait
+        //retourné si nous n'avions pas limité le nombre !
         $queryBuilder->select("COUNT(w)");
 
+        //on l'exécute en récupérant que le chiffre du résultat
         $countQuery = $queryBuilder->getQuery();
         $totalResultCount = $countQuery->getSingleScalarResult();
+
+
+        //mainteant, on peut récupérer les résultats qui nous intéressent en modifiant
+        //le même querybuilder !
+
+
+        //maintenant on veut sélectionner les entités
+        $queryBuilder->select("w");
 
         //notre offset
         //combien de résultats est-ce qu'on évite de récupérer
@@ -55,15 +66,13 @@ class WishRepository extends ServiceEntityRepository
         //le tri
         $queryBuilder->addOrderBy('w.dateCreated', 'DESC');
 
-        //maintenant on veut sélectionner les entités
-        $queryBuilder->select("w");
-
         //on récupère l'objet Query de doctrine
         $query = $queryBuilder->getQuery();
 
         //on exécute la requête et on récupère les résultats
         $result = $query->getResult();
 
+        //puisqu'on a 2 données à return de cette fonction, on les return dans un tableau
         return [
             "result" => $result,
             "totalResultCount" => $totalResultCount,
