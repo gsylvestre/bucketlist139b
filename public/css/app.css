@@ -1,6 +1,7 @@
 html {
     height: 100%;
     font-family: 'Montserrat', sans-serif;
+    overflow-y: scroll;
 }
 
 body {
@@ -54,6 +55,25 @@ header a {
 .site-title .logo {
     height: 27px;
     position: relative;
+}
+
+.wish-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-column-gap: 10px;
+}
+
+.wish-list article {
+    border: 1px solid #dfdfdf;
+    border-radius: 5px;
+    padding: 20px;
+    margin-bottom: 10px;
+    box-shadow: 2px 2px 2px rgba(100,100,100,0.1);
+}
+
+.wish-list article a {
+    color: #bb0d81;
+    text-decoration: none;
 }
 
 footer {

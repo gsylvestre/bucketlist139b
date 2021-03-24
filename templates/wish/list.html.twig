@@ -5,7 +5,7 @@
 {% block body %}
     <section>
         <h2>All wishes</h2>
-
+        <div class="wish-list">
         {% for wish in wishes %}
 
             <article>
@@ -15,5 +15,6 @@
         {% else %}
             <div>Nothing to see here!</div>
         {% endfor %}
+        </div>
     </section>
 {% endblock %}
