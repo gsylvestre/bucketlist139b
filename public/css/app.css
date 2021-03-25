@@ -81,6 +81,18 @@ footer {
     padding: 10px 0;
 }
 
+form label {
+    display: block;
+    margin-top: 10px;
+}
+
+form input[type="text"],
+textarea {
+    width: 200px;
+    box-sizing: border-box;
+}
+
+
 @media screen and (min-width: 600px){
      header .container {
          flex-direction: row;

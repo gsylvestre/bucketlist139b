@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h2>Create a new wish !</h2>
+
+    {# form_theme form 'foundation_5_layout.html.twig' #}
+
+    {{ form_start(wishForm) }}
+        {{ form_widget(wishForm) }}
+        <button>Save!</button>
+    {{ form_end(wishForm) }}
+{% endblock %}
+
+{% block title %}
+Create a wish
+{% endblock %}
+

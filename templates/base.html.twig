@@ -26,9 +26,18 @@
             <a href="{{ path('main_about_us') }}">About us</a>
             <a href="{{ path('wish_list') }}">All wishes</a>
             <a href="{{ path('main_test') }}">Test</a>
+            <a href="{{ path('wish_create') }}">Add a wish</a>
         </nav>
     </div>
 </header>
+
+{% for label, messages in app.flashes %}
+    {% for message in messages %}
+        <div class="alert alert-{{ label }}">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endfor %}
 
 <main>
     <div class="container">
