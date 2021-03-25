@@ -2,6 +2,7 @@
 
 {% block body %}
     <h2>{{ wish.title }}</h2>
+    <div>Categorized in: {{ wish.category.name }}</div>
     <div>{{ wish.description }}</div>
     <div>{{ wish.dateCreated|date("d-m-Y") }}</div>
 {% endblock %}
