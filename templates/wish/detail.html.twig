@@ -5,6 +5,25 @@
     <div>Categorized in: {{ wish.category.name }}</div>
     <div>{{ wish.description }}</div>
     <div>{{ wish.dateCreated|date("d-m-Y") }}</div>
+
+    <section>
+        <h2>A reaction?</h2>
+        {{ form_start(reactionForm) }}
+        {{ form_widget(reactionForm) }}
+        <button>Publish!</button>
+        {{ form_end(reactionForm) }}
+    </section>
+
+    <section>
+        {% for reaction in reactions %}
+        <article>
+            <div>Posted on:{{ reaction.dateCreated|date('Y-m-d') }}</div>
+            <p>{{ reaction.message }}</p>
+            <div>{{ reaction.username }}</div>
+        </article>
+        {% endfor %}
+    </section>
+
 {% endblock %}
 
 {% block title %}

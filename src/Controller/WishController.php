@@ -2,8 +2,11 @@
 
 namespace App\Controller;
 
+use App\Entity\Reaction;
 use App\Entity\Wish;
+use App\Form\ReactionType;
 use App\Form\WishType;
+use App\Repository\ReactionRepository;
 use App\Repository\WishRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -69,13 +72,37 @@ class WishController extends AbstractController
     /**
      * @Route("/wishes/detail/{id}", name="wish_detail")
      */
-    public function detail(int $id, WishRepository $wishRepository): Response
+    public function detail(
+        int $id,
+        WishRepository $wishRepository,
+        Request $request,
+        EntityManagerInterface $entityManager,
+        ReactionRepository $reactionRepository
+    ): Response
     {
         //todo: requête à la bdd pour aller chercher les infos de ce wish dont nous avons l'id dans l'URL
         $wish = $wishRepository->find($id);
 
+        $reactions = $reactionRepository->findBy(["wish" => $wish], ["dateCreated" => "DESC"], 20);
+
+        $reaction = new Reaction();
+        $reactionForm = $this->createForm(ReactionType::class, $reaction);
+
+        $reactionForm->handleRequest($request);
+        if ($reactionForm->isSubmitted() && $reactionForm->isValid()){
+            $reaction->setWish($wish);
+            $reaction->setDateCreated(new \DateTime());
+            $entityManager->persist($reaction);
+            $entityManager->flush();
+
+            $this->addFlash('success', 'Super intéressant merci !');
+            return $this->redirectToRoute('wish_detail', ['id' => $id]);
+        }
+
         return $this->render('wish/detail.html.twig', [
-            "wish" => $wish
+            "wish" => $wish,
+            "reactions" => $reactions,
+            "reactionForm" => $reactionForm->createView()
         ]);
     }
 }

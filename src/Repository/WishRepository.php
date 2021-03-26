@@ -82,6 +82,8 @@ class WishRepository extends ServiceEntityRepository
 
         $result = $query->getResult();
 
+
+
         //puisqu'on a 2 données à return de cette fonction, on les return dans un tableau
         return [
             "result" => $result,
