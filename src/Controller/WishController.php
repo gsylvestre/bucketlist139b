@@ -8,6 +8,7 @@ use App\Form\ReactionType;
 use App\Form\WishType;
 use App\Repository\ReactionRepository;
 use App\Repository\WishRepository;
+use App\Utils\Censurator;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -21,7 +22,11 @@ class WishController extends AbstractController
      * @IsGranted("ROLE_USER")
      * @Route("/wishes/create", name="wish_create")
      */
-    public function create(Request $request, EntityManagerInterface $entityManager): Response
+    public function create(
+        Request $request,
+        EntityManagerInterface $entityManager,
+        Censurator $censurator
+    ): Response
     {
         //crée un wish vide pour que symfo puisse y injecter les données
         $wish = new Wish();
@@ -42,6 +47,10 @@ class WishController extends AbstractController
             $wish->setLikes(0);
             $wish->setDateCreated(new \DateTime());
             $wish->setIsPublished(true);
+
+            //censure le titre et la description
+            $censoredTitle = $censurator->purify($wish->getTitle());
+            $wish->setTitle($censoredTitle);
 
             //sauvegarde en bdd
             $entityManager->persist($wish);
