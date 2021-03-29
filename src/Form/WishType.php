@@ -13,6 +13,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class WishType extends AbstractType
 {
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
@@ -23,7 +24,7 @@ class WishType extends AbstractType
                 "label" => "Describe it a little more!"
             ])
             ->add("author", TextType::class, [
-                "label" => "Who are you?"
+                "label" => "Who are you?",
             ])
             ->add("category", EntityType::class, [
                 "class" => Category::class,
